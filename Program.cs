@@ -1,13 +1,10 @@
 ﻿using Azure.AI.OpenAI;
-using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using OpenAI.Chat;
-using System;
-using System.Threading.Tasks;
 
 namespace FantasyFootballBot
 {
@@ -57,6 +54,26 @@ namespace FantasyFootballBot
         private static async Task OnMessageCreated(DiscordClient sender, MessageCreateEventArgs args)
         {
             if (args.Author.Id.Equals(Constants.pooKingUserId)) await args.Message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":poop:", true));
+
+            var message = args.Message;
+
+            if (message.Content.Substring(0, 22).Contains($"<@{Constants.paulieBotUserId}>"))
+            {
+                var prompt = message.Content.Substring(23).ToLower();
+
+                var messages = new List<ChatMessage>()
+                {
+                    new SystemChatMessage("You are a helpful AI Bot."),
+                    new UserChatMessage(prompt),
+                };
+
+                ChatCompletion chatCompletion = ChatBotClient!.CompleteChat(messages, new ChatCompletionOptions()
+                {
+                    MaxOutputTokenCount = 150,
+                });
+
+                await message.RespondAsync(chatCompletion.Content[0].Text);
+            }
         }
     }
 }
