@@ -55,6 +55,8 @@ namespace FantasyFootballBot
         {
             if (args.Author.Id.Equals(Constants.pooKingUserId)) await args.Message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":poop:", true));
 
+            if (!args.Channel.Name.Equals("paulie-chat")) return;
+
             var message = args.Message;
 
             if (message.Content.Substring(0, 22).Contains($"<@{Constants.paulieBotUserId}>"))
