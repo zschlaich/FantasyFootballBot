@@ -49,13 +49,19 @@ namespace FantasyFootballBot
         /// <summary>
         /// Method for reacting to a new message sent in the Discord.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+        /// <param name="sender">Client instance that recieved the message event.</param>
+        /// <param name="args">Arguments for the event.</param>
         private static async Task OnMessageCreated(DiscordClient sender, MessageCreateEventArgs args)
         {
             if (args.Author.Id.Equals(Constants.pooKingUserId)) await args.Message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":poop:", true));
 
-            if (!args.Channel.Name.Equals("paulie-chat")) return;
+            var allowedChannels = new List<string>()
+            {
+                "paulie-chat",
+                "bot-test",
+            };
+
+            if (!allowedChannels.Contains(args.Channel.Name)) return;
 
             var message = args.Message;
 
