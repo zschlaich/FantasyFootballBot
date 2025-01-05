@@ -66,8 +66,16 @@ namespace FantasyFootballBot
 
             var message = args.Message;
 
-            if (message.Content.Substring(0, 22).Contains($"<@{Constants.paulieBotUserId}>"))
+            // Paulie is only prompted when the message starts with "@Paulie"
+            if (message.Content.StartsWith($"<@{Constants.paulieBotUserId}>"))
             {
+                // check if message only contains "@Paulie"
+                if (message.Content.Equals($"<@{Constants.paulieBotUserId}>"))
+                {
+                    await message.RespondAsync("I'm sorry, did you mean to ask me something?");
+                    return;
+                }
+
                 var prompt = message.Content.Substring(23).ToLower();
 
                 var messages = new List<ChatMessage>()
