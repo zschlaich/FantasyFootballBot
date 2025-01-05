@@ -41,6 +41,7 @@ namespace FantasyFootballBot
             ChatBotClient = aiClient.GetChatClient(Constants.chatDeploymentName);
 
             DiscordBotClient.MessageCreated += OnMessageCreated;
+            DiscordBotClient.MessageReactionAdded += OnReactionAdded;
 
             await DiscordBotClient.ConnectAsync();
             await Task.Delay(-1);
@@ -75,6 +76,33 @@ namespace FantasyFootballBot
                 });
 
                 await message.RespondAsync(chatCompletion.Content[0].Text);
+            }
+        }
+
+        /// <summary>
+        /// Method for operations after a reaction is supplied on a message.
+        /// </summary>
+        /// <param name="sender">Client instance that recieved the reaction event.</param>
+        /// <param name="args">Arguments for the event.</param>
+        private static async Task OnReactionAdded(DiscordClient sender, MessageReactionAddEventArgs args)
+        {
+            var messageId = args.Message.Id;
+            var message = await args.Channel.GetMessageAsync(messageId);
+
+            var reactCount = 0;
+            foreach (DiscordReaction reaction in message.Reactions)
+            {
+                reactCount += reaction.Count;
+                if (reaction.Emoji.GetDiscordName().Equals(":spaghetti:") && reaction.IsMe) return;
+            }
+
+            if (reactCount >= 7)
+            {
+                await new DiscordMessageBuilder()
+                    .WithContent("Ah Mamma Mia, that's a-lotta reacts-a!")
+                    .WithReply(messageId)
+                    .SendAsync(message.Channel);
+                await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":spaghetti:", true));
             }
         }
     }
