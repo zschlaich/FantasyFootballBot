@@ -65,6 +65,7 @@ namespace FantasyFootballBot
             if (!allowedChannels.Contains(args.Channel.Name)) return;
 
             var message = args.Message;
+            var channel = args.Channel;
 
             // Paulie is only prompted when the message starts with "@Paulie"
             if (message.Content.StartsWith($"<@{Constants.paulieBotUserId}>"))
@@ -76,13 +77,18 @@ namespace FantasyFootballBot
                     return;
                 }
 
+                var previousChats = new List<ChatMessage>();
+                // check if message is part of a previous conversation
+                if (message.ReferencedMessage != null)
+                {
+                    await ConversationHelper(previousChats, channel, message.ReferencedMessage.Id);
+                }
+
                 var prompt = message.Content.Substring(23).ToLower();
 
-                var messages = new List<ChatMessage>()
-                {
-                    new SystemChatMessage("You are a helpful AI Bot."),
-                    new UserChatMessage(prompt),
-                };
+                var messages = new List<ChatMessage>() { new SystemChatMessage("You are a helpful AI Bot.") };
+                messages.AddRange(previousChats);
+                messages.Add(new UserChatMessage(prompt));
 
                 ChatCompletion chatCompletion = ChatBotClient!.CompleteChat(messages, new ChatCompletionOptions()
                 {
@@ -118,6 +124,27 @@ namespace FantasyFootballBot
                     .SendAsync(message.Channel);
                 await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":spaghetti:", true));
             }
+        }
+
+        /// <summary>
+        /// Helper method used to recursively collect all previous messages sent in a conversation.
+        /// </summary>
+        /// <param name="messages">List of ChatMessage objects previously sent in this conversation.</param>
+        /// <param name="channel">Channel this conversation is occurring in.</param>
+        /// <param name="messageId">Message ID value of the message we are currently adding to the messages object.</param>
+        private static async Task<List<ChatMessage>> ConversationHelper(List<ChatMessage> messages, DiscordChannel channel, ulong messageId)
+        {
+            var message = await channel.GetMessageAsync(messageId);
+
+            if (message.Author.IsCurrent) messages.Insert(0, new AssistantChatMessage(message.Content));
+            else messages.Insert(0, new UserChatMessage(message.Content.Substring(23).ToLower()));
+
+            if (message.ReferencedMessage != null)
+            {
+                await ConversationHelper(messages, channel, message.ReferencedMessage.Id);
+            }
+
+            return messages;
         }
     }
 }
