@@ -12,6 +12,7 @@ namespace FantasyFootballBot
     {
         private static DiscordClient? DiscordBotClient { get; set; }
         private static ChatClient? ChatBotClient { get; set; }
+        private static PowerRankings? PauliesPowerRankings { get; set; }
 
         public static async Task Main(string[] args)
         {
@@ -39,6 +40,10 @@ namespace FantasyFootballBot
             // TODO: add logic to test second key if the first doesn't work
             AzureOpenAIClient aiClient = new AzureOpenAIClient(new Uri(Constants.azureOpenAiEndpoint), new Azure.AzureKeyCredential(aiModelKey1!));
             ChatBotClient = aiClient.GetChatClient(Constants.chatDeploymentName);
+
+            // create PowerRankings object
+            HttpClient httpClient = new HttpClient();
+            PauliesPowerRankings = new PowerRankings(httpClient);
 
             DiscordBotClient.MessageCreated += OnMessageCreated;
             DiscordBotClient.MessageReactionAdded += OnReactionAdded;
