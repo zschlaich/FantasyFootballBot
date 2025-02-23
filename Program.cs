@@ -164,6 +164,10 @@ namespace FantasyFootballBot
             if (messageContent.Contains("maryland") || messageContent.Contains("umd") || messageContent.Contains("md") || messageContent.Contains("terp") || messageContent.Contains("terps"))
                 await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":terps:", true));
 
+            // clown reaction
+            if (messageContent.Contains("clown") || messageContent.Contains("cloen"))
+                await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":jimbo:", true));
+
             // add emoji reaction for direct @'s
             var pattern = @"<@(\d+)>";
             var regex = new Regex(pattern);
