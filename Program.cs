@@ -110,14 +110,18 @@ namespace FantasyFootballBot
             var messageId = args.Message.Id;
             var message = await args.Channel.GetMessageAsync(messageId);
 
-            var reactCount = 0;
+            var reactedUsers = new HashSet<DiscordUser>();
             foreach (DiscordReaction reaction in message.Reactions)
             {
-                reactCount += reaction.Count;
                 if (reaction.Emoji.GetDiscordName().Equals(":spaghetti:") && reaction.IsMe) return;
+
+                foreach (DiscordUser user in await message.GetReactionsAsync(reaction.Emoji))
+                {
+                    reactedUsers.Add(user);
+                }
             }
 
-            if (reactCount >= 7)
+            if (reactedUsers.Count >= 8)
             {
                 await new DiscordMessageBuilder()
                     .WithContent("Ah Mamma Mia, that's a-lotta reacts-a!")
