@@ -1,4 +1,5 @@
-﻿using Azure.AI.OpenAI;
+﻿using System.Text.RegularExpressions;
+using Azure.AI.OpenAI;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using DSharpPlus;
@@ -54,7 +55,7 @@ namespace FantasyFootballBot
         /// <param name="args">Arguments for the event.</param>
         private static async Task OnMessageCreated(DiscordClient sender, MessageCreateEventArgs args)
         {
-            if (args.Author.Id.Equals(Constants.pooKingUserId)) await args.Message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":poop:", true));
+            AddReactions(args);
 
             var allowedChannels = new List<string>()
             {
@@ -109,20 +110,127 @@ namespace FantasyFootballBot
             var messageId = args.Message.Id;
             var message = await args.Channel.GetMessageAsync(messageId);
 
-            var reactCount = 0;
+            var reactedUsers = new HashSet<DiscordUser>();
             foreach (DiscordReaction reaction in message.Reactions)
             {
-                reactCount += reaction.Count;
                 if (reaction.Emoji.GetDiscordName().Equals(":spaghetti:") && reaction.IsMe) return;
+
+                foreach (DiscordUser user in await message.GetReactionsAsync(reaction.Emoji))
+                {
+                    reactedUsers.Add(user);
+                }
             }
 
-            if (reactCount >= 7)
+            if (reactedUsers.Count >= 8)
             {
                 await new DiscordMessageBuilder()
                     .WithContent("Ah Mamma Mia, that's a-lotta reacts-a!")
                     .WithReply(messageId)
                     .SendAsync(message.Channel);
                 await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":spaghetti:", true));
+            }
+        }
+
+        /// <summary>
+        /// Add reactions to messages based on specific users or phrases.
+        /// </summary>
+        /// <param name="args">MessageCreateEventArgs for the message that was just sent.</param>
+        private static async void AddReactions(MessageCreateEventArgs args)
+        {
+            var message = args.Message;
+            var messageContent = message.Content.ToLower();
+
+            // champion trophy reaction
+            if (args.Author.Id.Equals(Constants.champUserId)) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":trophy:"));
+
+            // poo king poo reaction
+            if (args.Author.Id.Equals(Constants.pooKingUserId)) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":poop:"));
+
+            // random trump reaction
+            if (messageContent.Contains("trump"))
+            {
+                var randInt = new Random().Next();
+                if (randInt % 2 == 0)
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":trump:", true));
+                }
+                else
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":cheekybastard:", true));
+                }
+            }
+
+            // maryland pride reactions
+            if (messageContent.Contains("maryland") || messageContent.Contains("umd") || messageContent.Contains("md") || messageContent.Contains("terp") || messageContent.Contains("terps"))
+                await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":terps:", true));
+
+            // clown reaction
+            if (messageContent.Contains("clown") || messageContent.Contains("cloen"))
+                await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":jimbo:", true));
+
+            // add emoji reaction for direct @'s
+            var pattern = @"<@(\d+)>";
+            var regex = new Regex(pattern);
+            var matches = regex.Matches(messageContent);
+            if (matches.Count != 0)
+            {
+                var mentionedIds = new List<ulong>();
+                foreach (Match match in matches)
+                {
+                    foreach (Capture capture in match.Groups[1].Captures)
+                    {
+                        mentionedIds.Add(UInt64.Parse(capture.ToString()));
+                    }
+                }
+
+                foreach (var id in mentionedIds)
+                {
+                    switch (id)
+                    {
+                        case Constants.paulieBotUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":paulie:", true));
+                            break;
+                        case Constants.aaronUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":aaron:", true));
+                            break;
+                        case Constants.andyUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":andy:", true));
+                            break;
+                        case Constants.benUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":ben:", true));
+                            break;
+                        case Constants.danUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":dan:", true));
+                            break;
+                        case Constants.dbrickUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":dbrick:", true));
+                            break;
+                        case Constants.hunterUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":hunter:", true));
+                            break;
+                        case Constants.jackUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":jack:", true));
+                            break;
+                        case Constants.markUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":mark:", true));
+                            break;
+                        case Constants.mattUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":matt:", true));
+                            break;
+                        case Constants.patrickUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":patrick:", true));
+                            break;
+                        case Constants.rickUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":rick:", true));
+                            break;
+                        case Constants.shawnUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":shawn:", true));
+                            break;
+                        case Constants.zachUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":zach:", true));
+                            break;
+                    }
+                }
             }
         }
 
