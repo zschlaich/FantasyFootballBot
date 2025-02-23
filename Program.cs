@@ -194,6 +194,9 @@ namespace FantasyFootballBot
                         case Constants.danUserId:
                             await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":dan:", true));
                             break;
+                        case Constants.dbrickUserId:
+                            await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":dbrick:", true));
+                            break;
                         case Constants.hunterUserId:
                             await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":hunter:", true));
                             break;
