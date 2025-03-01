@@ -5,7 +5,7 @@ namespace FantasyFootballBot
 {
     public class PowerRankings
     {
-        private readonly HttpClient httpClient;
+        private readonly SleeperClient sleeperClient;
 
         /// <summary>
         /// Mapping of key: userId, value: Team.
@@ -17,23 +17,21 @@ namespace FantasyFootballBot
         /// </summary>
         public Dictionary<string, string> TeamNames { get; set; } = [];
         
-        public PowerRankings()
+        public PowerRankings() : this(new SleeperClient())
         {
-            httpClient = new HttpClient();
         }
 
-        public PowerRankings(HttpClient httpClient)
+        public PowerRankings(SleeperClient sleeperClient)
         {
-            this.httpClient = httpClient;
+            this.sleeperClient = sleeperClient;
         }
 
         /// <summary>
         /// Updates the TeamNames dictionary with the current team name.
         /// </summary>
-        public async void UpdateTeams()
+        public async void UpdateTeamNames()
         {
-            var leagueUsers = await httpClient.GetStringAsync($"https://api.sleeper.app/v1/league/{Constants.leagueId}/users");
-            var leagueUsersJson = JObject.Parse(leagueUsers);
+            var leagueUsersJson = await sleeperClient.GetLeagueUsers();
             foreach (var userJson in leagueUsersJson)
             {
                 var user = (JObject)userJson.Value!;
@@ -42,7 +40,7 @@ namespace FantasyFootballBot
 
                 if (!TeamNames.ContainsKey(userId) || !TeamNames.GetValueOrDefault(userId)!.Equals(teamName))
                 {
-                    TeamNames.Add(userId, teamName);
+                    TeamNames.TryAdd(userId, teamName);
                 }
             }
         }
@@ -52,15 +50,15 @@ namespace FantasyFootballBot
         /// </summary>
         public async void UpdateRosters()
         {
-            var rosters = await httpClient.GetStringAsync($"https://api.sleeper.app/v1/league/{Constants.leagueId}/rosters");
-            var rostersJson = JObject.Parse(rosters);
+            var rostersJson = await sleeperClient.GetLeagueRosters();
             foreach (var rosterJson in rostersJson)
             {
                 var roster = (JObject)rosterJson.Value!;
                 var ownerId = (string)roster.SelectToken("owner_id")!;
                 roster["team_name"] = TeamNames.GetValueOrDefault(ownerId);
 
-                Teams.Add(ownerId, new Team(roster));
+                Teams.TryAdd(ownerId, new Team(roster));
+            }
             }
         }
 

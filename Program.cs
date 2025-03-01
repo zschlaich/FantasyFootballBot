@@ -43,8 +43,7 @@ namespace FantasyFootballBot
             ChatBotClient = aiClient.GetChatClient(Constants.chatDeploymentName);
 
             // create PowerRankings object
-            HttpClient httpClient = new HttpClient();
-            PauliesPowerRankings = new PowerRankings(httpClient);
+            PauliesPowerRankings = new PowerRankings();
 
             DiscordBotClient.MessageCreated += OnMessageCreated;
             DiscordBotClient.MessageReactionAdded += OnReactionAdded;
