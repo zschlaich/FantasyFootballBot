@@ -95,6 +95,7 @@
             SUPER_FLEX,
             BN,
             IR,
+            TAXI,
         }
     }
 }
