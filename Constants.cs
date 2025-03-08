@@ -14,6 +14,12 @@
         public const string azureOpenAiKey2Name = "fantasyfootball-ai-key2";
         public const string discordBotTokenName = "paulie-bot-token";
 
+        // Storage Account
+        public const string storageAccountName = "pauliesffstorage";
+        public const string rankingsContainerName = "powerrankings";
+        public const string playersContainerName = "playerinfo";
+        public const string playersBlobName = "playerJson";
+
         // Discord info
         public const ulong paulieBotUserId = 1324767587271311410;
         public const ulong champUserId = benUserId;
