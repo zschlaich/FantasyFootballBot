@@ -82,7 +82,7 @@ namespace FantasyFootballBot
             {
                 var roster = (JObject)rosterJson;
                 var ownerId = (string)roster.SelectToken("owner_id")!;
-                roster["team_name"] = TeamNames.GetValueOrDefault(ownerId);
+                roster.Add("team_name", TeamNames.GetValueOrDefault(ownerId));
 
                 var team = new Team(roster);
                 team.UpdateRoster(playersJson);
