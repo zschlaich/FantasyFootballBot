@@ -139,7 +139,7 @@ namespace FantasyFootballBot
         /// Add reactions to messages based on specific users or phrases.
         /// </summary>
         /// <param name="args">MessageCreateEventArgs for the message that was just sent.</param>
-        private static async void AddReactions(MessageCreateEventArgs args)
+        private static async Task AddReactions(MessageCreateEventArgs args)
         {
             var message = args.Message;
             var messageContent = message.Content.ToLower();

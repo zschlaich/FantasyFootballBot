@@ -29,7 +29,7 @@ namespace FantasyFootballBot
         /// <summary>
         /// Updates the TeamNames dictionary with the current team name.
         /// </summary>
-        public async void UpdateTeamNames()
+        public async Task UpdateTeamNames()
         {
             var leagueUsersJson = await sleeperClient.GetLeagueUsers();
             foreach (var userJson in leagueUsersJson)
@@ -48,7 +48,7 @@ namespace FantasyFootballBot
         /// <summary>
         /// Updates the Teams dictionary with the current team roster construction.
         /// </summary>
-        public async void UpdateRosters()
+        public async Task UpdateRosters()
         {
             var rostersJson = await sleeperClient.GetLeagueRosters();
             foreach (var rosterJson in rostersJson)
