@@ -24,9 +24,9 @@ namespace FantasyFootballBot.Models
         private List<string>? StartersIds;
         private List<string>? BenchIds;
         private List<string>? TaxiIds;
-        public List<Player>? Starters { get; set; }
-        public List<Player>? Bench { get; set; }
-        public List<Player>? Taxi { get; set; }
+        public List<Player>? Starters { get; set; } = [];
+        public List<Player>? Bench { get; set; } = [];
+        public List<Player>? Taxi { get; set; } = [];
 
         // Team scoring info
         public float FptsFor { get; set; }
@@ -54,7 +54,7 @@ namespace FantasyFootballBot.Models
             WaiverBudgetUsed = (int)teamJson.SelectToken("settings.waiver_budget_used")!;
             WaiverBudgetRemaining = WaiverBudget - WaiverBudgetUsed;
 
-            UpdateRoster(teamJson);
+            UpdateRosterIds(teamJson);
 
             FptsForWhole = (int)teamJson.SelectToken("settings.fpts")!;
             FptsForDecimal = (int)teamJson.SelectToken("settings.fpts_decimal")!;
@@ -70,9 +70,9 @@ namespace FantasyFootballBot.Models
         }
 
         /// <summary>
-        /// Update's a team's roster to include new players and where they are located on the current roster (starter/bench/taxi).
+        /// Update's a team's roster ID Lists to include new players and where they are located on the current roster (starter/bench/taxi).
         /// </summary>
-        public void UpdateRoster(JObject teamJson)
+        private void UpdateRosterIds(JObject teamJson)
         {
             StartersIds = teamJson.SelectToken("starters")!.ToObject<List<string>>()!;
             TaxiIds = teamJson.SelectToken("taxi")!.ToObject<List<string>>()!;
@@ -85,6 +85,35 @@ namespace FantasyFootballBot.Models
                     BenchIds.Add(playerId);
                 }
             };
+        }
+
+        /// <summary>
+        /// Updates a team's roster of <see cref="Player"/> objects according to the player IDs within the StarterIds, BenchIds, and TaxiIds Lists.
+        /// </summary>
+        /// <param name="playersJson">JObject representation of the Sleeper player information.</param>
+        public void UpdateRoster(JObject playersJson)
+        {
+            Starters!.Clear();
+            Bench!.Clear();
+            Taxi!.Clear();
+
+            foreach (var starterId in StartersIds!)
+            {
+                var playerJson = (JObject)playersJson[starterId]!;
+                Starters.Add(new Player(playerJson));
+            }
+
+            foreach (var benchId in BenchIds!)
+            {
+                var playerJson = (JObject)playersJson[benchId]!;
+                Bench.Add(new Player(playerJson));
+            }
+
+            foreach (var taxiId in TaxiIds!)
+            {
+                var playerJson = (JObject)playersJson[taxiId]!;
+                Taxi.Add(new Player(playerJson));
+            }
         }
 
         public override string ToString()
