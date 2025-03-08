@@ -34,7 +34,7 @@ namespace FantasyFootballBot.Models
 
         public override string ToString()
         {
-            return $"'{FullName} ({String.Join(", ", Positions)}), {TeamCode}, {PlayerId}'";
+            return $"'{FirstName + ' ' + LastName} ({String.Join(", ", Positions)}), {TeamCode}, {PlayerId}'";
         }
     }
 }
