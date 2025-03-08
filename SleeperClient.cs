@@ -20,19 +20,19 @@ namespace FantasyFootballBot
             return JObject.Parse(await this.GetStringAsync($"league/{leagueId}"));
         }
 
-        public async Task<JObject> GetLeagueUsers()
+        public async Task<JArray> GetLeagueUsers()
         {
-            return JObject.Parse(await this.GetStringAsync($"league/{leagueId}/users"));
+            return JArray.Parse(await this.GetStringAsync($"league/{leagueId}/users"));
         }
 
-        public async Task<JObject> GetLeagueRosters()
+        public async Task<JArray> GetLeagueRosters()
         {
-            return JObject.Parse(await this.GetStringAsync($"league/{leagueId}/rosters"));
+            return JArray.Parse(await this.GetStringAsync($"league/{leagueId}/rosters"));
         }
 
-        public async Task<JObject> GetMatchups(int week)
+        public async Task<JArray> GetMatchups(int week)
         {
-            return JObject.Parse(await this.GetStringAsync($"league/{leagueId}>/matchups/{week}"));
+            return JArray.Parse(await this.GetStringAsync($"league/{leagueId}>/matchups/{week}"));
         }
 
         public async Task<JObject> GetPlayers()
