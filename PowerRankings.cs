@@ -34,7 +34,7 @@ namespace FantasyFootballBot
             var leagueUsersJson = await sleeperClient.GetLeagueUsers();
             foreach (var userJson in leagueUsersJson)
             {
-                var user = (JObject)userJson.Value!;
+                var user = (JObject)userJson;
                 var userId = (string)user.SelectToken("user_id")!;
                 var teamName = (string)user.SelectToken("metadata.team_name")!;
 
@@ -53,7 +53,7 @@ namespace FantasyFootballBot
             var rostersJson = await sleeperClient.GetLeagueRosters();
             foreach (var rosterJson in rostersJson)
             {
-                var roster = (JObject)rosterJson.Value!;
+                var roster = (JObject)rosterJson;
                 var ownerId = (string)roster.SelectToken("owner_id")!;
                 roster["team_name"] = TeamNames.GetValueOrDefault(ownerId);
 
