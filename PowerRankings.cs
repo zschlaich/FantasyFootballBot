@@ -42,7 +42,7 @@ namespace FantasyFootballBot
                 new DefaultAzureCredentialOptions()
                 {
                     ManagedIdentityClientId = Constants.managedIdentityClientId,
-        }
+                }
             );
 
             rankingsBlobServiceClient = new BlobServiceClient(new Uri(storageAccountEndpoint), azureCredential);
@@ -101,7 +101,7 @@ namespace FantasyFootballBot
             await UpdatePlayers();
             BlobDownloadResult result = await playerBlobClient.DownloadContentAsync();
             return JObject.Parse(result.Content.ToString());
-            }
+        }
 
         /// <summary>
         /// Updates the cached active player list. Data is only modified once per day to reduce calls made to the Sleeper API.
