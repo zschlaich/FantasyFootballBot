@@ -36,7 +36,7 @@ namespace FantasyFootballBot
         {
             this.sleeperClient = sleeperClient;
 
-            var storageAccountEndpoint = $"https://{Constants.storageAccountName}.blob.core.windows.net";
+            var storageAccountEndpoint = Constants.storageAccountEndpoint;
             var azureCredential = new DefaultAzureCredential(
                 new DefaultAzureCredentialOptions()
                 {

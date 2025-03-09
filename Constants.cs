@@ -16,9 +16,15 @@
 
         // Storage Account
         public const string storageAccountName = "pauliesffstorage";
+        public const string storageAccountEndpoint = $"https://{storageAccountName}.blob.core.windows.net";
         public const string rankingsContainerName = "powerrankings";
         public const string playersContainerName = "playerinfo";
+        public const string statsContainerName = "fantasydata";
         public const string playersBlobName = "playerJson";
+
+        // Stats GitHub info
+        public const string statsOwner = "hvpkod";
+        public const string statsRepoName = "NFL-Data";
 
         // Discord info
         public const ulong paulieBotUserId = 1324767587271311410;

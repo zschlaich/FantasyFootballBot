@@ -13,6 +13,7 @@ namespace FantasyFootballBot
     {
         private static DiscordClient? DiscordBotClient { get; set; }
         private static ChatClient? ChatBotClient { get; set; }
+        private static StatsClient? NflStatsClient { get; set; }
         private static PowerRankings? PauliesPowerRankings { get; set; }
 
         public static async Task Main(string[] args)
@@ -44,6 +45,9 @@ namespace FantasyFootballBot
 
             // create PowerRankings object
             PauliesPowerRankings = new PowerRankings();
+
+            // create StatsClient
+            NflStatsClient = new StatsClient();
 
             DiscordBotClient.MessageCreated += OnMessageCreated;
             DiscordBotClient.MessageReactionAdded += OnReactionAdded;
