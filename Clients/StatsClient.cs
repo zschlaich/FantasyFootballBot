@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using Octokit;
 using static FantasyFootballBot.Constants;
 
-namespace FantasyFootballBot
+namespace FantasyFootballBot.Clients
 {
     /// <summary>
     /// Client responsible for copying and formatting stats information from source Github repo to our Storage Account.
@@ -36,12 +36,12 @@ namespace FantasyFootballBot
             var azureCredential = new DefaultAzureCredential(
                 new DefaultAzureCredentialOptions()
                 {
-                    ManagedIdentityClientId = Constants.managedIdentityClientId,
+                    ManagedIdentityClientId = managedIdentityClientId,
                 }
             );
 
             _statsBlobServiceClient = new BlobServiceClient(new Uri(storageAccountEndpoint), azureCredential);
-            _statsBlobContainerClient = _statsBlobServiceClient.GetBlobContainerClient(Constants.statsContainerName);
+            _statsBlobContainerClient = _statsBlobServiceClient.GetBlobContainerClient(statsContainerName);
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace FantasyFootballBot
 
         private async Task GetFinalStatsWeek(int year, int week, PlayerPositions position)
         {
-            var posPath = String.Format(_finalStatsPathWeek, year, week, position);
-            var weekStatsList = await _gitHubClient.Repository.Content.GetAllContents(Constants.statsOwner, Constants.statsRepoName, posPath);
+            var posPath = string.Format(_finalStatsPathWeek, year, week, position);
+            var weekStatsList = await _gitHubClient.Repository.Content.GetAllContents(statsOwner, statsRepoName, posPath);
 
             var encodedStats = weekStatsList[0].EncodedContent;
             byte[] data = Convert.FromBase64String(encodedStats);
@@ -97,8 +97,8 @@ namespace FantasyFootballBot
 
         private async Task GetProjectedStatsWeek(int year, int week, PlayerPositions position)
         {
-            var posPath = String.Format(_projectedStatsPath, year, week, position);
-            var weekStatsList = await _gitHubClient.Repository.Content.GetAllContents(Constants.statsOwner, Constants.statsRepoName, posPath);
+            var posPath = string.Format(_projectedStatsPath, year, week, position);
+            var weekStatsList = await _gitHubClient.Repository.Content.GetAllContents(statsOwner, statsRepoName, posPath);
 
             var encodedStats = weekStatsList[0].EncodedContent;
             byte[] data = Convert.FromBase64String(encodedStats);
@@ -110,8 +110,8 @@ namespace FantasyFootballBot
 
         private async Task GetFinalStatsSeason(int year, PlayerPositions position)
         {
-            var posPath = String.Format(_finalStatsPathSeason, year, position);
-            var seasonStatsList = await _gitHubClient.Repository.Content.GetAllContents(Constants.statsOwner, Constants.statsRepoName, posPath);
+            var posPath = string.Format(_finalStatsPathSeason, year, position);
+            var seasonStatsList = await _gitHubClient.Repository.Content.GetAllContents(statsOwner, statsRepoName, posPath);
 
             var encodedStats = seasonStatsList[0].EncodedContent;
             byte[] data = Convert.FromBase64String(encodedStats);

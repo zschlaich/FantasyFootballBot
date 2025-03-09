@@ -5,6 +5,7 @@ using Azure.Security.KeyVault.Secrets;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using FantasyFootballBot.Clients;
 using OpenAI.Chat;
 
 namespace FantasyFootballBot
