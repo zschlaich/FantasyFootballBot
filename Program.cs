@@ -232,6 +232,109 @@ namespace FantasyFootballBot
                     }
                 }
             }
+            // draft reactions
+            if (args.Channel.Name == "draft")
+            {
+                // Teams
+                if (messageContent.Contains("cardinals")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":bird:"));
+                if (messageContent.Contains("falcons")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":phoenix:"));
+                if (messageContent.Contains("ravens")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":ravens:", true));
+                if (messageContent.Contains("bills")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":bison:"));
+                if (messageContent.Contains("panthers")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":black_cat:"));
+                if (messageContent.Contains("bears")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":bear:"));
+                if (messageContent.Contains("bengals")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":tiger:"));
+                if (messageContent.Contains("browns")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":poop:"));
+                if (messageContent.Contains("cowboys")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":star:"));
+                if (messageContent.Contains("broncos")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":racehorse:"));
+                if (messageContent.Contains("lions")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":lion:"));
+                if (messageContent.Contains("packers")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":cheese:"));
+                if (messageContent.Contains("texans")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":ox:"));
+                if (messageContent.Contains("colts")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":horse:"));
+                if (messageContent.Contains("jaguars")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":jags:", true));
+                if (messageContent.Contains("chiefs")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":feather:"));
+                if (messageContent.Contains("raiders")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":pirate_flag:"));
+                if (messageContent.Contains("chargers")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":zap:"));
+                if (messageContent.Contains("rams")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":ram:"));
+                if (messageContent.Contains("dolphins")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":dolphin:"));
+                if (messageContent.Contains("vikings"))
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_s:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_k:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_o:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_l:"));
+                }
+                if (messageContent.Contains("patriots")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":pats:", true));
+                if (messageContent.Contains("saints")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":fleur_de_lis:"));
+                if (messageContent.Contains("giants")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":cityscape:"));
+                if (messageContent.Contains("jets")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":airplane:"));
+                if (messageContent.Contains("eagles")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":eagle:"));
+                if (messageContent.Contains("steelers")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":construction_worker:"));
+                if (messageContent.Contains("49ers")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":coin:"));
+                if (messageContent.Contains("seahawks")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":seahawks:", true));
+                if (messageContent.Contains("buccaneers")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":skull_crossbones:"));
+                if (messageContent.Contains("titans")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":oil:"));
+                if (messageContent.Contains("commanders")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":commanders:", true));
+
+                // Players
+                if (messageContent.Contains("josh allen"))
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_m:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_v:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_p:"));
+                }
+                if (messageContent.Contains("lamar jackson")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":8ball:"));
+                if (messageContent.Contains("ja'marr chase"))
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":man_running:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":dash:"));
+                }
+                if (messageContent.Contains("joe burrow")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":cold_face:"));
+                if (messageContent.Contains("justin jefferson")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":airplane:"));
+                if (messageContent.Contains("jalen hurts"))
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":peach:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":leftwards_pushing_hand:"));
+                }
+                if (messageContent.Contains("ceedee lamb")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":cd:"));
+                if (messageContent.Contains("patrick mahomes")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":frog:"));
+                if (messageContent.Contains("amon-ra st. brown"))
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":sun:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":pray:"));
+                }
+                if (messageContent.Contains("drake london")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":england:"));
+                if (messageContent.Contains("caleb williams")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":nail_care:"));
+                if (messageContent.Contains("jordan love")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":love_letter:"));
+                if (messageContent.Contains("rashee rice")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":rice:"));
+                if (messageContent.Contains("baker mayfield")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":cook:"));
+                if (messageContent.Contains("zay flowers")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":bouquet:"));
+                if (messageContent.Contains("jaylen waddle")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":penguin:"));
+                if (messageContent.Contains("brian robinson")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":bigcap:", true));
+                if (messageContent.Contains("calvin ridley")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":slot_machine:"));
+                if (messageContent.Contains("stefon diggs") || messageContent.Contains("tai felton")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":terps:", true));
+                if (messageContent.Contains("shedeur sanders")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":watch:"));
+                if (messageContent.Contains("tank ")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":tank:", true));
+                if (messageContent.Contains("rashod bateman")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":bat:"));
+                if (messageContent.Contains("jalen royals")) await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":crown:"));
+                if (messageContent.Contains("russell wilson"))
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_u:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_n:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_l:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_i:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_m:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":information:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_t:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_e:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":regional_indicator_d:"));
+                }
+                if (messageContent.Contains("aaron rodgers"))
+                {
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":prohibited:"));
+                    await message.CreateReactionAsync(DiscordEmoji.FromName(DiscordBotClient, ":syringe:"));
+                }
+            }
+
         }
 
         /// <summary>
